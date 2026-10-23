@@ -50,6 +50,7 @@ button:disabled {
   display: none;
   position: relative;
   width: 100%;
+  min-height: 100vh;
   min-height: 100svh;
   padding: 32px 18px;
   align-items: center;
@@ -67,10 +68,6 @@ button:disabled {
 @keyframes sceneIn {
   from { opacity: 0; transform: translateY(9px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-.script {
-  font-family: "Dancing Script", cursive;
 }
 
 .kicker {
@@ -110,20 +107,20 @@ button:active { transform: scale(.97); }
 }
 
 /* =================================
-   SCENE 1: HEART + SIDE ARROW
+   SCENE 1: EXTRA-LARGE HEART
 ================================= */
 
 #intro {
   background:
-    radial-gradient(ellipse at 50% 42%, #ffe2ed 0%, transparent 42%),
+    radial-gradient(ellipse at 50% 43%, #ffd2e4 0%, transparent 48%),
     linear-gradient(145deg, #fffafc, #ffedf4);
 }
 
 .intro-title {
   margin: 0;
-  font-size: clamp(27px, 6vw, 36px);
-  font-weight: 400;
-  letter-spacing: .3px;
+  font-family: "Dancing Script", cursive;
+  font-size: clamp(30px, 7vw, 42px);
+  font-weight: 600;
   color: #85546b;
 }
 
@@ -135,9 +132,9 @@ button:active { transform: scale(.97); }
 
 .heart-stage {
   position: relative;
-  width: min(80vw, 320px);
-  height: 270px;
-  margin: 15px auto 12px;
+  width: min(94vw, 440px);
+  height: clamp(330px, 58vh, 450px);
+  margin: 12px auto;
   display: grid;
   place-items: center;
   overflow: visible;
@@ -145,32 +142,33 @@ button:active { transform: scale(.97); }
 
 .heart-halo {
   position: absolute;
-  width: 170px;
-  height: 170px;
+  width: min(82vw, 340px);
+  height: min(82vw, 340px);
   border-radius: 50%;
-  background: #ff8cb5;
-  filter: blur(55px);
-  opacity: .43;
+  background: #ff77ad;
+  filter: blur(75px);
+  opacity: .58;
   animation: haloPulse 2s ease-in-out infinite;
 }
 
 @keyframes haloPulse {
-  0%, 100% { transform: scale(.85); opacity: .25; }
-  50% { transform: scale(1.12); opacity: .5; }
+  0%, 100% { transform: scale(.84); opacity: .35; }
+  50% { transform: scale(1.13); opacity: .68; }
 }
 
 .heart-object {
   position: relative;
   z-index: 2;
-  font-size: 155px;
+  font-size: clamp(250px, 68vw, 390px);
   line-height: 1;
   color: #f65f99;
-  filter: drop-shadow(0 5px 3px #b62c6029)
-          drop-shadow(0 0 12px #fa6aa17a);
+  filter:
+    drop-shadow(0 8px 6px #b62c6038)
+    drop-shadow(0 0 24px #fa6aa1aa)
+    drop-shadow(0 0 55px #fa6aa155);
   transform: scale(1);
-  transition: transform .45s ease, opacity .45s ease, filter .45s ease;
-  animation: heartBeat 1.65s ease-in-out infinite;
   transform-origin: center;
+  animation: heartBeat 1.65s ease-in-out infinite;
 }
 
 @keyframes heartBeat {
@@ -190,17 +188,19 @@ button:active { transform: scale(.97); }
   100% { transform: scale(0); opacity: 0; }
 }
 
+/* ARROW NOW ENTERS FROM THE LEFT */
+
 .arrow {
   position: absolute;
   z-index: 5;
   top: 50%;
-  right: -115px;
-  font-size: 74px;
+  left: -125px;
+  font-size: clamp(68px, 15vw, 90px);
   line-height: 1;
   color: #b9788e;
   opacity: 0;
-  transform: translateY(-50%) rotate(-12deg);
-  filter: drop-shadow(0 3px 5px #c8789740);
+  transform: translateY(-50%) rotate(12deg);
+  filter: drop-shadow(0 3px 7px #c8789740);
   pointer-events: none;
 }
 
@@ -210,20 +210,20 @@ button:active { transform: scale(.97); }
 
 @keyframes arrowStrike {
   0% {
-    right: -115px;
+    left: -125px;
     opacity: 0;
-    transform: translateY(-50%) rotate(-12deg) scale(.85);
+    transform: translateY(-50%) rotate(12deg) scale(.85);
   }
   12% { opacity: 1; }
   80% {
-    right: calc(50% - 100px);
+    left: calc(50% - 40px);
     opacity: 1;
-    transform: translateY(-50%) rotate(-12deg) scale(1.05);
+    transform: translateY(-50%) rotate(12deg) scale(1.05);
   }
   100% {
-    right: calc(50% - 95px);
+    left: calc(50% - 32px);
     opacity: 0;
-    transform: translateY(-50%) rotate(-12deg) scale(.8);
+    transform: translateY(-50%) rotate(12deg) scale(.8);
   }
 }
 
@@ -232,9 +232,9 @@ button:active { transform: scale(.97); }
   z-index: 4;
   left: 50%;
   top: 50%;
-  width: 16px;
-  height: 16px;
-  border: 2px solid #f47ca8;
+  width: 22px;
+  height: 22px;
+  border: 3px solid #f47ca8;
   border-radius: 50%;
   opacity: 0;
   transform: translate(-50%, -50%) scale(.3);
@@ -246,21 +246,18 @@ button:active { transform: scale(.97); }
 }
 
 @keyframes impactBurst {
-  0% { opacity: .9; transform: translate(-50%, -50%) scale(.3); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(5); }
+  0% { opacity: .95; transform: translate(-50%, -50%) scale(.3); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(7); }
 }
 
-#intro.is-striking .heart-object {
-  animation: none;
-}
-
+#intro.is-striking .heart-object,
 #intro.is-striking .heart-halo {
   animation: none;
 }
 
 .pull-button {
-  min-width: 205px;
-  margin-top: 4px;
+  min-width: 215px;
+  margin-top: 3px;
 }
 
 .pull-button .arrow-icon {
@@ -338,7 +335,7 @@ button:active { transform: scale(.97); }
 }
 
 /* =================================
-   SCENE 3: TREE + BLOOMING HEARTS
+   SCENE 3: DENSE HEART TREE
 ================================= */
 
 #garden {
@@ -365,12 +362,12 @@ button:active { transform: scale(.97); }
 
 .garden {
   position: relative;
-  width: min(100%, 430px);
-  height: 345px;
+  width: min(100%, 450px);
+  height: clamp(390px, 62vh, 510px);
   overflow: hidden;
   border-radius: 20px;
   background:
-    radial-gradient(ellipse at 50% 65%, #ffe0e9, transparent 63%),
+    radial-gradient(ellipse at 50% 55%, #ffe0e9, transparent 68%),
     linear-gradient(180deg, #fff8fb, #ffebf3);
 }
 
@@ -378,13 +375,13 @@ button:active { transform: scale(.97); }
   position: absolute;
   left: 50%;
   top: 43%;
-  width: 230px;
-  height: 230px;
+  width: 270px;
+  height: 270px;
   transform: translate(-50%, -50%);
   background: #ffbed6;
   border-radius: 50%;
   filter: blur(55px);
-  opacity: .35;
+  opacity: .4;
 }
 
 .ground {
@@ -400,11 +397,11 @@ button:active { transform: scale(.97); }
 
 .tree-trunk {
   position: absolute;
-  left: calc(50% - 10px);
+  left: calc(50% - 11px);
   bottom: 18px;
   z-index: 1;
-  width: 20px;
-  height: 165px;
+  width: 22px;
+  height: 190px;
   border-radius: 60% 50% 10% 10%;
   background: linear-gradient(90deg, #885c64, #b58183, #8d6068);
   transform: rotate(2deg);
@@ -420,23 +417,23 @@ button:active { transform: scale(.97); }
 }
 
 .branch-left {
-  width: 118px;
+  width: 135px;
   left: 50%;
-  bottom: 125px;
+  bottom: 135px;
   transform: rotate(-145deg);
 }
 
 .branch-right {
-  width: 128px;
+  width: 140px;
   left: 50%;
-  bottom: 120px;
+  bottom: 130px;
   transform: rotate(-36deg);
 }
 
 .branch-top {
-  width: 100px;
+  width: 115px;
   left: 50%;
-  bottom: 165px;
+  bottom: 175px;
   transform: rotate(-105deg);
 }
 
@@ -454,15 +451,24 @@ button:active { transform: scale(.97); }
   color: var(--petal, #f779a9);
   font-size: var(--size, 20px);
   line-height: 1;
-  text-shadow: 0 1px 6px #e7639a35;
+  text-shadow: 0 1px 6px #e7639a45;
   animation: blossomGrow .55s cubic-bezier(.2,1.6,.4,1) forwards;
   animation-delay: var(--delay, 0s);
 }
 
 @keyframes blossomGrow {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(-25deg); }
-  75% { opacity: 1; transform: translate(-50%, -50%) scale(1.15) rotate(8deg); }
-  100% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0); }
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0) rotate(-25deg);
+  }
+  75% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.15) rotate(8deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0);
+  }
 }
 
 .love-letter {
@@ -492,9 +498,7 @@ button:active { transform: scale(.97); }
   font-weight: 600;
 }
 
-.love-letter p {
-  font-size: 12px;
-}
+.love-letter p { font-size: 12px; }
 
 .signature {
   text-align: right;
@@ -503,27 +507,37 @@ button:active { transform: scale(.97); }
   color: #b7497b;
 }
 
-/* Little decorative hearts */
+/* Floating background hearts */
 
-.floating-heart {
-  position: absolute;
-  z-index: 0;
+#particles {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
   pointer-events: none;
-  color: #e977a2;
-  animation: floatHeart 4s ease-in-out infinite;
+  z-index: 0;
 }
 
-@keyframes floatHeart {
-  0%, 100% { transform: translateY(0) rotate(-8deg); }
-  50% { transform: translateY(-14px) rotate(8deg); }
+.particle {
+  position: absolute;
+  bottom: -40px;
+  color: #ffadd0;
+  opacity: 0;
+  animation: floatUp linear infinite;
+  text-shadow: 0 0 12px #ff5ca7;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0); opacity: 0; }
+  15% { opacity: .6; }
+  85% { opacity: .4; }
+  100% { transform: translateY(-115vh) rotate(280deg); opacity: 0; }
 }
 
 @media (max-width: 380px) {
-  .heart-stage { height: 240px; }
-  .heart-object { font-size: 135px; }
-  .arrow { font-size: 62px; }
-  .photo-placeholder { font-size: 10px; }
-  .garden { height: 310px; }
+  .heart-stage { height: 320px; }
+  .heart-object { font-size: 245px; }
+  .arrow { font-size: 64px; }
+  .garden { height: 370px; }
   .love-letter { padding: 18px 16px; }
 }
 
@@ -548,7 +562,7 @@ button:active { transform: scale(.97); }
   <h2 class="intro-title">Made with love ♡</h2>
   <p class="intro-subtitle">A tiny surprise, just for you...</p>
 
-  <div class="heart-stage" id="heartStage">
+  <div class="heart-stage">
     <div class="heart-halo"></div>
     <div class="heart-object" id="bigHeart">♥</div>
     <div class="arrow" id="arrow" aria-hidden="true">➶</div>
@@ -591,12 +605,10 @@ button:active { transform: scale(.97); }
   <div class="garden">
     <div class="garden-glow"></div>
     <div class="ground"></div>
-
     <div class="tree-trunk"></div>
     <div class="branch branch-left"></div>
     <div class="branch branch-right"></div>
     <div class="branch branch-top"></div>
-
     <div id="blossoms"></div>
   </div>
 
@@ -621,10 +633,7 @@ button:active { transform: scale(.97); }
       you are to me.
     </p>
 
-    <p class="signature">
-      Always yours,<br>
-      JJ ♡
-    </p>
+    <p class="signature">Always yours,<br>JJ ♡</p>
   </article>
 
   <button id="replay" type="button">WATCH IT AGAIN ↻</button>
@@ -651,7 +660,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let busy = false;
   let gardenBuilt = false;
-  let transitionTimer = null;
+  let timers = [];
+
+  function later(callback, delay) {
+    const timer = window.setTimeout(callback, delay);
+    timers.push(timer);
+    return timer;
+  }
+
+  function clearTimers() {
+    timers.forEach(window.clearTimeout);
+    timers = [];
+  }
 
   function showScene(scene) {
     [intro, birthday, garden].forEach(function (item) {
@@ -662,22 +682,22 @@ document.addEventListener("DOMContentLoaded", function () {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  // Floating decorative hearts in the background.
+  // Decorative floating hearts.
   const particleBox = document.getElementById("particles");
 
-  for (let i = 0; i < 22; i++) {
+  for (let i = 0; i < 28; i++) {
     const particle = document.createElement("span");
     particle.className = "particle";
     particle.textContent = Math.random() > 0.5 ? "♡" : "♥";
     particle.style.left = Math.random() * 100 + "%";
-    particle.style.fontSize = (10 + Math.random() * 15) + "px";
+    particle.style.fontSize = (12 + Math.random() * 18) + "px";
     particle.style.animationDuration = (7 + Math.random() * 8) + "s";
     particle.style.animationDelay = (-Math.random() * 12) + "s";
     particleBox.appendChild(particle);
   }
 
-  // PULL & RELEASE: arrow enters from the right side,
-  // hits the heart, heart shrinks, then birthday screen opens.
+  // Arrow comes from the LEFT, hits the large heart,
+  // and the heart shrinks before the birthday scene opens.
   pullButton.addEventListener("click", function () {
     if (busy) return;
 
@@ -691,20 +711,17 @@ document.addEventListener("DOMContentLoaded", function () {
     bigHeart.classList.remove("hit");
     impact.classList.remove("show");
 
-    // Restart the animation reliably on repeated plays.
     void arrow.offsetWidth;
     arrow.classList.add("fly");
 
-    // At the end of the arrow flight, show the impact and shrink the heart.
-    transitionTimer = window.setTimeout(function () {
+    later(function () {
       impact.classList.remove("show");
       void impact.offsetWidth;
       impact.classList.add("show");
-
       bigHeart.classList.add("hit");
     }, 570);
 
-    transitionTimer = window.setTimeout(function () {
+    later(function () {
       showScene(birthday);
 
       busy = false;
@@ -715,52 +732,54 @@ document.addEventListener("DOMContentLoaded", function () {
       arrow.classList.remove("fly");
       bigHeart.classList.remove("hit");
       impact.classList.remove("show");
-
       introNote.textContent = "Tap to release a little love 💌";
     }, 1300);
   });
 
-  // Build a dense canopy of colorful heart blossoms.
+  // Five times denser heart canopy.
   function createBlossoms() {
     blossoms.replaceChildren();
 
     const colors = [
-      "#f76d9e",
-      "#ff9dc0",
-      "#ed568c",
-      "#d5a1f4",
-      "#ba91e8",
-      "#ffb1cc",
-      "#e66eae",
-      "#f8a4ad"
+      "#f76d9e", "#ff9dc0", "#ed568c", "#d5a1f4",
+      "#ba91e8", "#ffb1cc", "#e66eae", "#f8a4ad",
+      "#f24f86", "#ffc1dc", "#c985e9", "#ff8dba"
     ];
 
-    // Rows of hearts form the tree canopy.
+    // Dense canopy: many more rows and more hearts per row.
     const rows = [
-      { y: 17, left: 42, right: 58 },
-      { y: 24, left: 31, right: 69 },
-      { y: 31, left: 22, right: 78 },
-      { y: 38, left: 15, right: 85 },
-      { y: 45, left: 12, right: 88 },
-      { y: 52, left: 17, right: 83 },
-      { y: 59, left: 24, right: 76 },
-      { y: 65, left: 34, right: 66 }
+      { y: 12, left: 44, right: 56 },
+      { y: 16, left: 37, right: 63 },
+      { y: 20, left: 30, right: 70 },
+      { y: 24, left: 24, right: 76 },
+      { y: 28, left: 19, right: 81 },
+      { y: 32, left: 15, right: 85 },
+      { y: 36, left: 12, right: 88 },
+      { y: 40, left: 10, right: 90 },
+      { y: 44, left: 9, right: 91 },
+      { y: 48, left: 11, right: 89 },
+      { y: 52, left: 14, right: 86 },
+      { y: 56, left: 18, right: 82 },
+      { y: 60, left: 23, right: 77 },
+      { y: 64, left: 29, right: 71 },
+      { y: 68, left: 36, right: 64 },
+      { y: 72, left: 43, right: 57 }
     ];
 
     let index = 0;
 
     rows.forEach(function (row) {
-      const total = Math.round((row.right - row.left) / 4.4);
+      const total = Math.round((row.right - row.left) / 2.15);
 
       for (let i = 0; i < total; i++) {
         const heart = document.createElement("span");
         heart.className = "blossom";
-        heart.textContent = Math.random() > 0.16 ? "♥" : "♡";
+        heart.textContent = Math.random() > 0.12 ? "♥" : "♡";
 
         const spread = total > 1 ? i / (total - 1) : 0.5;
         const x = row.left + spread * (row.right - row.left)
-          + (Math.random() * 2.5 - 1.25);
-        const y = row.y + (Math.random() * 3.5 - 1.75);
+          + (Math.random() * 1.8 - 0.9);
+        const y = row.y + (Math.random() * 2.2 - 1.1);
 
         heart.style.left = x + "%";
         heart.style.top = y + "%";
@@ -770,11 +789,11 @@ document.addEventListener("DOMContentLoaded", function () {
         );
         heart.style.setProperty(
           "--size",
-          (13 + Math.random() * 13) + "px"
+          (11 + Math.random() * 13) + "px"
         );
         heart.style.setProperty(
           "--delay",
-          (index * 0.018 + Math.random() * 0.12) + "s"
+          (index * 0.006 + Math.random() * 0.08) + "s"
         );
 
         blossoms.appendChild(heart);
@@ -791,23 +810,18 @@ document.addEventListener("DOMContentLoaded", function () {
     busy = true;
     openGarden.disabled = true;
 
-    if (!gardenBuilt) {
-      createBlossoms();
-    }
+    if (!gardenBuilt) createBlossoms();
 
     showScene(garden);
 
-    window.setTimeout(function () {
+    later(function () {
       busy = false;
       openGarden.disabled = false;
     }, 700);
   });
 
   replay.addEventListener("click", function () {
-    if (transitionTimer !== null) {
-      window.clearTimeout(transitionTimer);
-      transitionTimer = null;
-    }
+    clearTimers();
 
     busy = false;
     gardenBuilt = false;
@@ -822,6 +836,7 @@ document.addEventListener("DOMContentLoaded", function () {
     introNote.textContent = "Tap to release a little love 💌";
 
     openGarden.disabled = false;
+    blossoms.replaceChildren();
 
     showScene(intro);
   });
@@ -829,5 +844,4 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 </body>
-  </html>
-  
+</html>
