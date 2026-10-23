@@ -1,0 +1,833 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fff2f7">
+<title>A Little Something for Sangam ♡</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+  --pink: #f56e9f;
+  --deep-pink: #e74f87;
+  --pale: #fff3f7;
+  --purple: #b99ae8;
+  --ink: #6f4255;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: Poppins, sans-serif;
+  color: var(--ink);
+  background: var(--pale);
+}
+
+button { font: inherit; }
+
+button:focus-visible {
+  outline: 3px solid #a92f68;
+  outline-offset: 4px;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: .75;
+}
+
+.scene {
+  display: none;
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  padding: 32px 18px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  overflow: hidden;
+}
+
+.scene.active {
+  display: flex;
+  animation: sceneIn .7s ease both;
+}
+
+@keyframes sceneIn {
+  from { opacity: 0; transform: translateY(9px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.script {
+  font-family: "Dancing Script", cursive;
+}
+
+.kicker {
+  margin: 0 0 24px;
+  font-size: 10px;
+  letter-spacing: 4px;
+  line-height: 1.8;
+  color: #b76b89;
+}
+
+button {
+  border: 1px solid #ef9dbb;
+  border-radius: 999px;
+  padding: 14px 25px;
+  background: linear-gradient(135deg, #ffe8f0, #ffc1d7);
+  color: #7b3151;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  box-shadow: 0 7px 22px #e879a51c;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+  touch-action: manipulation;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 26px #e879a540;
+}
+
+button:active { transform: scale(.97); }
+
+.note {
+  margin: 17px 0 0;
+  font-size: 11px;
+  color: #ad7a90;
+}
+
+/* =================================
+   SCENE 1: HEART + SIDE ARROW
+================================= */
+
+#intro {
+  background:
+    radial-gradient(ellipse at 50% 42%, #ffe2ed 0%, transparent 42%),
+    linear-gradient(145deg, #fffafc, #ffedf4);
+}
+
+.intro-title {
+  margin: 0;
+  font-size: clamp(27px, 6vw, 36px);
+  font-weight: 400;
+  letter-spacing: .3px;
+  color: #85546b;
+}
+
+.intro-subtitle {
+  margin: 12px 0 0;
+  font-size: 12px;
+  color: #ad7d91;
+}
+
+.heart-stage {
+  position: relative;
+  width: min(80vw, 320px);
+  height: 270px;
+  margin: 15px auto 12px;
+  display: grid;
+  place-items: center;
+  overflow: visible;
+}
+
+.heart-halo {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: #ff8cb5;
+  filter: blur(55px);
+  opacity: .43;
+  animation: haloPulse 2s ease-in-out infinite;
+}
+
+@keyframes haloPulse {
+  0%, 100% { transform: scale(.85); opacity: .25; }
+  50% { transform: scale(1.12); opacity: .5; }
+}
+
+.heart-object {
+  position: relative;
+  z-index: 2;
+  font-size: 155px;
+  line-height: 1;
+  color: #f65f99;
+  filter: drop-shadow(0 5px 3px #b62c6029)
+          drop-shadow(0 0 12px #fa6aa17a);
+  transform: scale(1);
+  transition: transform .45s ease, opacity .45s ease, filter .45s ease;
+  animation: heartBeat 1.65s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.055); }
+}
+
+.heart-object.hit {
+  animation: heartHit .58s ease-in forwards;
+}
+
+@keyframes heartHit {
+  0% { transform: scale(1); opacity: 1; }
+  18% { transform: scale(1.15); }
+  40% { transform: scale(.78); }
+  72% { transform: scale(.4); opacity: .65; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+.arrow {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  right: -115px;
+  font-size: 74px;
+  line-height: 1;
+  color: #b9788e;
+  opacity: 0;
+  transform: translateY(-50%) rotate(-12deg);
+  filter: drop-shadow(0 3px 5px #c8789740);
+  pointer-events: none;
+}
+
+.arrow.fly {
+  animation: arrowStrike .72s cubic-bezier(.18,.75,.22,1) forwards;
+}
+
+@keyframes arrowStrike {
+  0% {
+    right: -115px;
+    opacity: 0;
+    transform: translateY(-50%) rotate(-12deg) scale(.85);
+  }
+  12% { opacity: 1; }
+  80% {
+    right: calc(50% - 100px);
+    opacity: 1;
+    transform: translateY(-50%) rotate(-12deg) scale(1.05);
+  }
+  100% {
+    right: calc(50% - 95px);
+    opacity: 0;
+    transform: translateY(-50%) rotate(-12deg) scale(.8);
+  }
+}
+
+.impact {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #f47ca8;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.3);
+  pointer-events: none;
+}
+
+.impact.show {
+  animation: impactBurst .55s ease-out forwards;
+}
+
+@keyframes impactBurst {
+  0% { opacity: .9; transform: translate(-50%, -50%) scale(.3); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(5); }
+}
+
+#intro.is-striking .heart-object {
+  animation: none;
+}
+
+#intro.is-striking .heart-halo {
+  animation: none;
+}
+
+.pull-button {
+  min-width: 205px;
+  margin-top: 4px;
+}
+
+.pull-button .arrow-icon {
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 17px;
+  vertical-align: -1px;
+}
+
+/* =================================
+   SCENE 2: BIRTHDAY REVEAL
+================================= */
+
+#birthday {
+  color: white;
+  background:
+    radial-gradient(ellipse at 50% 42%, #ff8cb9 0%, transparent 48%),
+    linear-gradient(145deg, #f9a3c1, #ef699c 56%, #d9528d);
+}
+
+.wish {
+  font-family: "Dancing Script", cursive;
+  font-size: clamp(35px, 9vw, 57px);
+  margin: 0 0 16px;
+  color: #fff8fc;
+  text-shadow: 0 2px 13px #b83a6d28;
+  animation: wishAppear 1s ease both;
+}
+
+@keyframes wishAppear {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.birthday-sparkle {
+  font-size: 43px;
+  margin: 2px 0 12px;
+  animation: sparkleBeat 2s ease-in-out infinite;
+}
+
+@keyframes sparkleBeat {
+  50% { transform: rotate(12deg) scale(1.12); }
+}
+
+#birthday h1 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(37px, 10vw, 68px);
+  line-height: 1.17;
+  font-weight: 500;
+  text-shadow: 0 4px 20px #b62e6724;
+}
+
+#birthday h1 span { font-weight: 700; }
+
+.gold-line {
+  width: 120px;
+  height: 2px;
+  margin: 23px 0;
+  background: linear-gradient(90deg, transparent, #fff0c7, transparent);
+}
+
+.birthday-message {
+  max-width: 310px;
+  margin: 0 0 26px;
+  font-size: 12px;
+  line-height: 1.9;
+  color: #fff4f8;
+}
+
+.birthday-button {
+  background: linear-gradient(135deg, #fff6fa, #ffe0ed);
+  color: #b83f71;
+  border-color: white;
+}
+
+/* =================================
+   SCENE 3: TREE + BLOOMING HEARTS
+================================= */
+
+#garden {
+  justify-content: flex-start;
+  padding-top: 30px;
+  background:
+    radial-gradient(ellipse at 50% 42%, #ffe0ec 0%, transparent 54%),
+    linear-gradient(180deg, #fff9fb, #ffedf4);
+}
+
+.garden-heading {
+  font-family: "Dancing Script", cursive;
+  font-size: clamp(36px, 8vw, 53px);
+  font-weight: 600;
+  color: #a74e75;
+  margin: 0 0 6px;
+}
+
+.garden-subtitle {
+  margin: 0 0 16px;
+  font-size: 11px;
+  color: #b77b95;
+}
+
+.garden {
+  position: relative;
+  width: min(100%, 430px);
+  height: 345px;
+  overflow: hidden;
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse at 50% 65%, #ffe0e9, transparent 63%),
+    linear-gradient(180deg, #fff8fb, #ffebf3);
+}
+
+.garden-glow {
+  position: absolute;
+  left: 50%;
+  top: 43%;
+  width: 230px;
+  height: 230px;
+  transform: translate(-50%, -50%);
+  background: #ffbed6;
+  border-radius: 50%;
+  filter: blur(55px);
+  opacity: .35;
+}
+
+.ground {
+  position: absolute;
+  left: -10%;
+  bottom: -30px;
+  width: 120%;
+  height: 70px;
+  border-radius: 50%;
+  background: #edc1d0;
+  opacity: .45;
+}
+
+.tree-trunk {
+  position: absolute;
+  left: calc(50% - 10px);
+  bottom: 18px;
+  z-index: 1;
+  width: 20px;
+  height: 165px;
+  border-radius: 60% 50% 10% 10%;
+  background: linear-gradient(90deg, #885c64, #b58183, #8d6068);
+  transform: rotate(2deg);
+}
+
+.branch {
+  position: absolute;
+  z-index: 1;
+  height: 9px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #96676e, #b68188);
+  transform-origin: left center;
+}
+
+.branch-left {
+  width: 118px;
+  left: 50%;
+  bottom: 125px;
+  transform: rotate(-145deg);
+}
+
+.branch-right {
+  width: 128px;
+  left: 50%;
+  bottom: 120px;
+  transform: rotate(-36deg);
+}
+
+.branch-top {
+  width: 100px;
+  left: 50%;
+  bottom: 165px;
+  transform: rotate(-105deg);
+}
+
+#blossoms {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.blossom {
+  position: absolute;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+  color: var(--petal, #f779a9);
+  font-size: var(--size, 20px);
+  line-height: 1;
+  text-shadow: 0 1px 6px #e7639a35;
+  animation: blossomGrow .55s cubic-bezier(.2,1.6,.4,1) forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes blossomGrow {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(-25deg); }
+  75% { opacity: 1; transform: translate(-50%, -50%) scale(1.15) rotate(8deg); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0); }
+}
+
+.love-letter {
+  width: min(100%, 430px);
+  margin: 22px 0;
+  padding: 22px 20px;
+  text-align: left;
+  border: 1px solid #f4c2d5;
+  border-radius: 20px;
+  background: #ffffffa6;
+  box-shadow: 0 10px 30px #a44c6a0c;
+  color: #795164;
+  line-height: 1.9;
+}
+
+.love-letter .label {
+  text-align: center;
+  color: #bd658a;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.love-letter h2 {
+  font-family: "Dancing Script", cursive;
+  font-size: 32px;
+  margin: 10px 0;
+  font-weight: 600;
+}
+
+.love-letter p {
+  font-size: 12px;
+}
+
+.signature {
+  text-align: right;
+  font-family: "Dancing Script", cursive;
+  font-size: 25px !important;
+  color: #b7497b;
+}
+
+/* Little decorative hearts */
+
+.floating-heart {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  color: #e977a2;
+  animation: floatHeart 4s ease-in-out infinite;
+}
+
+@keyframes floatHeart {
+  0%, 100% { transform: translateY(0) rotate(-8deg); }
+  50% { transform: translateY(-14px) rotate(8deg); }
+}
+
+@media (max-width: 380px) {
+  .heart-stage { height: 240px; }
+  .heart-object { font-size: 135px; }
+  .arrow { font-size: 62px; }
+  .photo-placeholder { font-size: 10px; }
+  .garden { height: 310px; }
+  .love-letter { padding: 18px 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="particles" aria-hidden="true"></div>
+
+<!-- SCENE 1 -->
+<section class="scene active" id="intro">
+  <p class="kicker">A LITTLE SOMETHING, FOR YOU</p>
+
+  <h2 class="intro-title">Made with love ♡</h2>
+  <p class="intro-subtitle">A tiny surprise, just for you...</p>
+
+  <div class="heart-stage" id="heartStage">
+    <div class="heart-halo"></div>
+    <div class="heart-object" id="bigHeart">♥</div>
+    <div class="arrow" id="arrow" aria-hidden="true">➶</div>
+    <div class="impact" id="impact"></div>
+  </div>
+
+  <button class="pull-button" id="pullButton" type="button">
+    <span class="arrow-icon">➶</span>PULL &amp; RELEASE
+  </button>
+  <p class="note" id="introNote">Tap to release a little love 💌</p>
+</section>
+
+<!-- SCENE 2 -->
+<section class="scene" id="birthday">
+  <p class="kicker" style="color:#fff0f7">A SPECIAL DAY FOR SOMEONE SPECIAL</p>
+
+  <p class="wish">make a wish...</p>
+  <div class="birthday-sparkle">✧ 🎂 ✧</div>
+
+  <h1>Happy Birthday,<br><span>Sangam!</span></h1>
+
+  <div class="gold-line"></div>
+
+  <p class="birthday-message">
+    May your world be filled with love, little joys,
+    beautiful dreams and endless reasons to smile. ♡
+  </p>
+
+  <button class="birthday-button" id="openGarden" type="button">
+    OPEN YOUR SURPRISE ♡
+  </button>
+</section>
+
+<!-- SCENE 3 -->
+<section class="scene" id="garden">
+  <p class="kicker">A LITTLE GARDEN, JUST FOR YOU</p>
+  <h2 class="garden-heading">For you, Sangam ♡</h2>
+  <p class="garden-subtitle">Every little heart is a reason I adore you.</p>
+
+  <div class="garden">
+    <div class="garden-glow"></div>
+    <div class="ground"></div>
+
+    <div class="tree-trunk"></div>
+    <div class="branch branch-left"></div>
+    <div class="branch branch-right"></div>
+    <div class="branch branch-top"></div>
+
+    <div id="blossoms"></div>
+  </div>
+
+  <article class="love-letter">
+    <p class="label">♡ A LETTER FROM MY HEART ♡</p>
+    <h2>Dear Sangam,</h2>
+
+    <p>
+      Happy Birthday, my love. 💗 I wish I could be right beside you
+      today, making you smile and reminding you how special you are to me.
+    </p>
+
+    <p>
+      May every dream you hold close come a little nearer, and may your
+      days be filled with peace, happiness, laughter and love. Even the
+      smallest moments become beautiful when they remind me of you.
+    </p>
+
+    <p>
+      If I could give you one thing, it would be the ability to see
+      yourself through my eyes, so you could understand just how precious
+      you are to me.
+    </p>
+
+    <p class="signature">
+      Always yours,<br>
+      JJ ♡
+    </p>
+  </article>
+
+  <button id="replay" type="button">WATCH IT AGAIN ↻</button>
+  <p class="note">Made with love, only for you. ♡</p>
+</section>
+
+<script>
+"use strict";
+
+document.addEventListener("DOMContentLoaded", function () {
+  const intro = document.getElementById("intro");
+  const birthday = document.getElementById("birthday");
+  const garden = document.getElementById("garden");
+
+  const pullButton = document.getElementById("pullButton");
+  const introNote = document.getElementById("introNote");
+  const arrow = document.getElementById("arrow");
+  const bigHeart = document.getElementById("bigHeart");
+  const impact = document.getElementById("impact");
+
+  const openGarden = document.getElementById("openGarden");
+  const blossoms = document.getElementById("blossoms");
+  const replay = document.getElementById("replay");
+
+  let busy = false;
+  let gardenBuilt = false;
+  let transitionTimer = null;
+
+  function showScene(scene) {
+    [intro, birthday, garden].forEach(function (item) {
+      item.classList.remove("active");
+    });
+
+    scene.classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // Floating decorative hearts in the background.
+  const particleBox = document.getElementById("particles");
+
+  for (let i = 0; i < 22; i++) {
+    const particle = document.createElement("span");
+    particle.className = "particle";
+    particle.textContent = Math.random() > 0.5 ? "♡" : "♥";
+    particle.style.left = Math.random() * 100 + "%";
+    particle.style.fontSize = (10 + Math.random() * 15) + "px";
+    particle.style.animationDuration = (7 + Math.random() * 8) + "s";
+    particle.style.animationDelay = (-Math.random() * 12) + "s";
+    particleBox.appendChild(particle);
+  }
+
+  // PULL & RELEASE: arrow enters from the right side,
+  // hits the heart, heart shrinks, then birthday screen opens.
+  pullButton.addEventListener("click", function () {
+    if (busy) return;
+
+    busy = true;
+    pullButton.disabled = true;
+    pullButton.textContent = "♡ SENDING LOVE...";
+    introNote.textContent = "A little love is on its way...";
+
+    intro.classList.add("is-striking");
+    arrow.classList.remove("fly");
+    bigHeart.classList.remove("hit");
+    impact.classList.remove("show");
+
+    // Restart the animation reliably on repeated plays.
+    void arrow.offsetWidth;
+    arrow.classList.add("fly");
+
+    // At the end of the arrow flight, show the impact and shrink the heart.
+    transitionTimer = window.setTimeout(function () {
+      impact.classList.remove("show");
+      void impact.offsetWidth;
+      impact.classList.add("show");
+
+      bigHeart.classList.add("hit");
+    }, 570);
+
+    transitionTimer = window.setTimeout(function () {
+      showScene(birthday);
+
+      busy = false;
+      pullButton.disabled = false;
+      pullButton.innerHTML = '<span class="arrow-icon">➶</span>PULL &amp; RELEASE';
+
+      intro.classList.remove("is-striking");
+      arrow.classList.remove("fly");
+      bigHeart.classList.remove("hit");
+      impact.classList.remove("show");
+
+      introNote.textContent = "Tap to release a little love 💌";
+    }, 1300);
+  });
+
+  // Build a dense canopy of colorful heart blossoms.
+  function createBlossoms() {
+    blossoms.replaceChildren();
+
+    const colors = [
+      "#f76d9e",
+      "#ff9dc0",
+      "#ed568c",
+      "#d5a1f4",
+      "#ba91e8",
+      "#ffb1cc",
+      "#e66eae",
+      "#f8a4ad"
+    ];
+
+    // Rows of hearts form the tree canopy.
+    const rows = [
+      { y: 17, left: 42, right: 58 },
+      { y: 24, left: 31, right: 69 },
+      { y: 31, left: 22, right: 78 },
+      { y: 38, left: 15, right: 85 },
+      { y: 45, left: 12, right: 88 },
+      { y: 52, left: 17, right: 83 },
+      { y: 59, left: 24, right: 76 },
+      { y: 65, left: 34, right: 66 }
+    ];
+
+    let index = 0;
+
+    rows.forEach(function (row) {
+      const total = Math.round((row.right - row.left) / 4.4);
+
+      for (let i = 0; i < total; i++) {
+        const heart = document.createElement("span");
+        heart.className = "blossom";
+        heart.textContent = Math.random() > 0.16 ? "♥" : "♡";
+
+        const spread = total > 1 ? i / (total - 1) : 0.5;
+        const x = row.left + spread * (row.right - row.left)
+          + (Math.random() * 2.5 - 1.25);
+        const y = row.y + (Math.random() * 3.5 - 1.75);
+
+        heart.style.left = x + "%";
+        heart.style.top = y + "%";
+        heart.style.setProperty(
+          "--petal",
+          colors[Math.floor(Math.random() * colors.length)]
+        );
+        heart.style.setProperty(
+          "--size",
+          (13 + Math.random() * 13) + "px"
+        );
+        heart.style.setProperty(
+          "--delay",
+          (index * 0.018 + Math.random() * 0.12) + "s"
+        );
+
+        blossoms.appendChild(heart);
+        index++;
+      }
+    });
+
+    gardenBuilt = true;
+  }
+
+  openGarden.addEventListener("click", function () {
+    if (busy) return;
+
+    busy = true;
+    openGarden.disabled = true;
+
+    if (!gardenBuilt) {
+      createBlossoms();
+    }
+
+    showScene(garden);
+
+    window.setTimeout(function () {
+      busy = false;
+      openGarden.disabled = false;
+    }, 700);
+  });
+
+  replay.addEventListener("click", function () {
+    if (transitionTimer !== null) {
+      window.clearTimeout(transitionTimer);
+      transitionTimer = null;
+    }
+
+    busy = false;
+    gardenBuilt = false;
+
+    intro.classList.remove("is-striking");
+    arrow.classList.remove("fly");
+    bigHeart.classList.remove("hit");
+    impact.classList.remove("show");
+
+    pullButton.disabled = false;
+    pullButton.innerHTML = '<span class="arrow-icon">➶</span>PULL &amp; RELEASE';
+    introNote.textContent = "Tap to release a little love 💌";
+
+    openGarden.disabled = false;
+
+    showScene(intro);
+  });
+});
+</script>
+
+</body>
+  </html>
+  
